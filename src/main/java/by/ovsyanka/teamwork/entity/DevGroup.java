@@ -7,25 +7,29 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity(name = "TASK")
+@Entity(name = "DEVGROUPS")
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"team","tasks","users"})
 @AllArgsConstructor
 @NoArgsConstructor
-public class Task {
+public class DevGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idTask", nullable = false)
+    @Column(name = "idDevGroup", nullable = false)
     private Long id;
-    @Column(name = "nameTask", nullable = false, length = 150)
+    @Column(name = "nameDevGroup", nullable = false, length = 150)
     private String name;
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "idUser")
+    @JoinColumn(name = "idTeam")
     @JsonManagedReference
-    private User user;
-    @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
+    private Team team;
+    @OneToMany(mappedBy = "devGroup", fetch = FetchType.EAGER)
     @JsonBackReference
-    private Collection<Comment>  comments;
+    private Collection<Task> tasks;
+    @OneToMany(mappedBy = "devGroup", fetch = FetchType.EAGER)
+    @JsonBackReference
+    private Collection<User> users;
+
 }
