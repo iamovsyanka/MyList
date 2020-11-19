@@ -1,4 +1,4 @@
-package by.ovsyanka.teamwork;
+package by.ovsyanka.mylist;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
