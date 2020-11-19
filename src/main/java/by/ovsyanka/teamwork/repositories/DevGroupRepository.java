@@ -1,6 +1,5 @@
 package by.ovsyanka.teamwork.repositories;
 
-import by.ovsyanka.teamwork.entity.DevGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -8,18 +8,17 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity(name = "ROLES")
+@Entity(name = "userroles")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
+public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idRole", nullable = false)
-    private Long id;
-    @Column(name = "nameRole", nullable = false)
+    @Column(name = "roleId", nullable = false)
+    private int id;
+
+    @Column(name = "role", nullable = false)
     private String name;
-    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
-    @JsonBackReference
-    private Collection<User> users;
+
 }

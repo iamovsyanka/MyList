@@ -7,7 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity(name = "TASK")
+@Entity(name = "tasks")
 @Getter
 @Setter
 @ToString
@@ -19,13 +19,16 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idTask", nullable = false)
     private Long id;
+
     @Column(name = "nameTask", nullable = false, length = 150)
     private String name;
+
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "idUser")
     @JsonManagedReference
     private User user;
+
     @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
     @JsonBackReference
-    private Collection<Comment>  comments;
+    private Collection<Comment> comments;
 }
