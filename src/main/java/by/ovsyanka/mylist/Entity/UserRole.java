@@ -16,7 +16,7 @@ public class UserRole {
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name= "increment", strategy= "increment")
     @Column(name = "roleId", nullable = false)
-    private Long userId;
+    private Long roleId;
 
     @Column(name = "role", nullable = false)
     private String role;
