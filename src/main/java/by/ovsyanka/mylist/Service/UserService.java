@@ -1,25 +1,14 @@
-package net.proselyte.jwtappdemo.service;
+package by.ovsyanka.mylist.Service;
 
-import net.proselyte.jwtappdemo.model.User;
+import by.ovsyanka.mylist.Dto.UserDto;
+import by.ovsyanka.mylist.Entity.User;
 
 import java.util.List;
 
-/**
- * Service interface for class {@link User}.
- *
- * @author Eugene Suleimanov
- * @version 1.0
- */
-
 public interface UserService {
-
-    User register(User user);
-
+    User register(UserDto userDto) throws Exception;
     List<User> getAll();
-
-    User findByUsername(String username);
-
+    User findByUserName(String username);
     User findById(Long id);
-
     void delete(Long id);
 }

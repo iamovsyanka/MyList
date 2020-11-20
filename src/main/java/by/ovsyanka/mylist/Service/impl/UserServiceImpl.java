@@ -1,26 +1,16 @@
-package net.proselyte.jwtappdemo.service.impl;
+package by.ovsyanka.mylist.Service.impl;
 
+import by.ovsyanka.mylist.Dto.UserDto;
+import by.ovsyanka.mylist.Entity.User;
+import by.ovsyanka.mylist.Repository.RoleRepository;
+import by.ovsyanka.mylist.Repository.UserRepository;
+import by.ovsyanka.mylist.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import net.proselyte.jwtappdemo.model.Role;
-import net.proselyte.jwtappdemo.model.Status;
-import net.proselyte.jwtappdemo.model.User;
-import net.proselyte.jwtappdemo.repository.RoleRepository;
-import net.proselyte.jwtappdemo.repository.UserRepository;
-import net.proselyte.jwtappdemo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Implementation of {@link UserService} interface.
- * Wrapper for {@link UserRepository} + business logic.
- *
- * @author Eugene Suleimanov
- * @version 1.0
- */
 
 @Service
 @Slf4j
@@ -38,20 +28,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(User user) {
-        Role roleUser = roleRepository.findByName("ROLE_USER");
-        List<Role> userRoles = new ArrayList<>();
-        userRoles.add(roleUser);
+    public User register(UserDto userDto) throws Exception {
+        if(userRepository.findByUserName(userDto.getUserName()) != null) {
+            throw new Exception("User has already registered");
+        }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(userRoles);
-        user.setStatus(Status.ACTIVE);
+        if(!userDto.getPassword().equals(userDto.getRepeatPassword())) {
+            throw new Exception("Passwords are not equal");
+        }
 
-        User registeredUser = userRepository.save(user);
+        User user = new User();
+        user.setUserName(userDto.getUserName());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setUserRole(roleRepository.getRoleByRole("user"));
+        userRepository.save(user);
 
-        log.info("IN register - user: {} successfully registered", registeredUser);
-
-        return registeredUser;
+        return user;
     }
 
     @Override
@@ -62,9 +54,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
-        User result = userRepository.findByUsername(username);
+    public User findByUserName(String username) {
+        User result = userRepository.findByUserName(username);
         log.info("IN findByUsername - user: {} found by username: {}", result, username);
+
         return result;
     }
 
