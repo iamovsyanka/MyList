@@ -3,6 +3,7 @@ package by.ovsyanka.mylist.Security;
 import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Security.jwt.JwtUser;
 import by.ovsyanka.mylist.Security.jwt.JwtUserFactory;
+import by.ovsyanka.mylist.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
