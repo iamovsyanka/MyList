@@ -1,4 +1,4 @@
-package net.proselyte.jwtappdemo.security.jwt;
+package by.ovsyanka.mylist.Security.jwt;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,13 +11,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-/**
- * JWT token filter that handles all HTTP requests to application.
- *
- * @author Eugene Suliemanov
- * @version 1.0
- */
-
 public class JwtTokenFilter extends GenericFilterBean {
 
     private JwtTokenProvider jwtTokenProvider;
@@ -27,10 +20,10 @@ public class JwtTokenFilter extends GenericFilterBean {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
 
-        String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
+        String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
         if (token != null && jwtTokenProvider.validateToken(token)) {
             Authentication auth = jwtTokenProvider.getAuthentication(token);
 
@@ -38,7 +31,8 @@ public class JwtTokenFilter extends GenericFilterBean {
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
-        filterChain.doFilter(req, res);
+
+        filterChain.doFilter(request, response);
     }
 
 }

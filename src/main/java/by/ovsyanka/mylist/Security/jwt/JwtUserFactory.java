@@ -1,45 +1,35 @@
-package net.proselyte.jwtappdemo.security.jwt;
+package by.ovsyanka.mylist.Security.jwt;
 
-import net.proselyte.jwtappdemo.model.Role;
-import net.proselyte.jwtappdemo.model.Status;
-import net.proselyte.jwtappdemo.model.User;
+import by.ovsyanka.mylist.Entity.User;
+import by.ovsyanka.mylist.Entity.UserRole;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Implementation of Factory Method for class {@link JwtUser}.
- *
- * @author Eugene Suleimanov
- * @version 1.0
- */
-
+@NoArgsConstructor
 public final class JwtUserFactory {
-
-    public JwtUserFactory() {
-    }
 
     public static JwtUser create(User user) {
         return new JwtUser(
-                user.getId(),
-                user.getUsername(),
-                user.getFirstName(),
-                user.getLastName(),
+                user.getUserId(),
+                user.getUserName(),
                 user.getEmail(),
                 user.getPassword(),
-                mapToGrantedAuthorities(new ArrayList<>(user.getRoles())),
-                user.getStatus().equals(Status.ACTIVE),
+                mapToGrantedAuthorities(new ArrayList<UserRole>(Collections.singleton(user.getUserRole()))),
+                true,
                 user.getUpdated()
         );
     }
 
-    private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> userRoles) {
+    private static List<GrantedAuthority> mapToGrantedAuthorities(List<UserRole> userRoles) {
         return userRoles.stream()
                 .map(role ->
-                        new SimpleGrantedAuthority(role.getName())
+                        new SimpleGrantedAuthority(role.getRole())
                 ).collect(Collectors.toList());
     }
 }
