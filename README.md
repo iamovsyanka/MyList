@@ -1,2 +1,2 @@
 # MyList
-New version of the project
+Когда я доделаю этот проект, принесите цветочки на мою могилку :poop:
