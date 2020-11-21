@@ -1,7 +1,9 @@
 package by.ovsyanka.mylist.Service.impl;
 
 import by.ovsyanka.mylist.Dto.UserDto;
+import by.ovsyanka.mylist.Entity.Role;
 import by.ovsyanka.mylist.Entity.User;
+import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Repository.RoleRepository;
 import by.ovsyanka.mylist.Repository.UserRepository;
 import by.ovsyanka.mylist.Service.UserService;
@@ -10,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Service
 @Slf4j
+@Service
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -28,55 +30,43 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(UserDto userDto) throws Exception {
-        if(userRepository.findByUserName(userDto.getUserName()) != null) {
-            throw new Exception("User has already registered");
-        }
+    @Loggable
+    public User registration(User user) {
+        Role roleUser = roleRepository.findByRole("user");
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleUser);
 
-        if(!userDto.getPassword().equals(userDto.getRepeatPassword())) {
-            throw new Exception("Passwords are not equal");
-        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(userRoles);
 
-        User user = new User();
-        user.setUserName(userDto.getUserName());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setUserRole(roleRepository.getRoleByRole("user"));
-        userRepository.save(user);
-
-        return user;
+        return userRepository.save(user);
     }
 
     @Override
+    @Loggable
     public List<User> getAll() {
         List<User> result = userRepository.findAll();
-        log.info("IN getAll - {} users found", result.size());
+
         return result;
     }
 
     @Override
+    @Loggable
     public User findByUserName(String username) {
-        User result = userRepository.findByUserName(username);
-        log.info("IN findByUsername - user: {} found by username: {}", result, username);
-
-        return result;
+        return userRepository.findByUserName(username);
     }
 
     @Override
+    @Loggable
     public User findById(Long id) {
         User result = userRepository.findById(id).orElse(null);
 
-        if (result == null) {
-            log.warn("IN findById - no user found by id: {}", id);
-            return null;
-        }
-
-        log.info("IN findById - user: {} found by id: {}", result);
         return result;
     }
 
     @Override
+    @Loggable
     public void delete(Long id) {
         userRepository.deleteById(id);
-        log.info("IN delete - user with id: {} successfully deleted");
     }
 }
