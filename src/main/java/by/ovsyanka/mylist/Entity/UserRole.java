@@ -18,7 +18,7 @@ public class UserRole {
     @Column(name = "roleId", nullable = false)
     private Long roleId;
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "role", nullable = false, unique = true)
     private String role;
 
     @OneToMany(mappedBy = "userRole", fetch = FetchType.EAGER)

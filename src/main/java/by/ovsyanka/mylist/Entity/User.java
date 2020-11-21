@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.ManyToAny;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -18,7 +20,7 @@ public class User {
     @Column(name = "userId", nullable = false)
     private Long userId;
 
-    @Column(name = "userName", nullable = false)
+    @Column(name = "userName", nullable = false, unique = true)
     private String userName;
 
     @Column(name = "password", nullable = false)
@@ -30,4 +32,7 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "roleId", nullable = false)
     private UserRole userRole;
+
+    @LastModifiedDate
+    private Date updated;
 }
