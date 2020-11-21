@@ -1,8 +1,8 @@
-package net.proselyte.jwtappdemo.rest;
+package by.ovsyanka.mylist.Rest;
 
-import net.proselyte.jwtappdemo.dto.UserDto;
-import net.proselyte.jwtappdemo.model.User;
-import net.proselyte.jwtappdemo.service.UserService;
+import by.ovsyanka.mylist.Dto.UserDto;
+import by.ovsyanka.mylist.Entity.User;
+import by.ovsyanka.mylist.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,13 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-/**
- * REST controller user connected requestst.
- *
- * @author Eugene Suleimanov
- * @version 1.0
- */
 
 @RestController
 @RequestMapping(value = "/api/v1/users/")

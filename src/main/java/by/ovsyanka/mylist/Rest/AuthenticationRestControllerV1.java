@@ -1,10 +1,12 @@
-package net.proselyte.jwtappdemo.rest;
+package by.ovsyanka.mylist.Rest;
 
-import net.proselyte.jwtappdemo.dto.AuthenticationRequestDto;
-import net.proselyte.jwtappdemo.model.User;
-import net.proselyte.jwtappdemo.security.jwt.JwtTokenProvider;
-import net.proselyte.jwtappdemo.service.UserService;
+import by.ovsyanka.mylist.Dto.UserDto;
+import by.ovsyanka.mylist.Entity.User;
+import by.ovsyanka.mylist.Security.jwt.JwtTokenProvider;
+import by.ovsyanka.mylist.Service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,21 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * REST controller for authentication requests (login, logout, register, etc.)
- *
- * @author Eugene Suleimanov
- * @version 1.0
- */
-
 @RestController
 @RequestMapping(value = "/api/v1/auth/")
 public class AuthenticationRestControllerV1 {
 
     private final AuthenticationManager authenticationManager;
-
     private final JwtTokenProvider jwtTokenProvider;
-
     private final UserService userService;
 
     @Autowired
@@ -44,11 +37,11 @@ public class AuthenticationRestControllerV1 {
     }
 
     @PostMapping("login")
-    public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
+    public ResponseEntity<Map<Object, Object>> login(@RequestBody UserDto requestDto) {
         try {
-            String username = requestDto.getUsername();
+            String username = requestDto.getName();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-            User user = userService.findByUsername(username);
+            User user = userService.findByName(username);
 
             if (user == null) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");

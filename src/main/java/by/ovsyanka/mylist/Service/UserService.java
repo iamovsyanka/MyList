@@ -6,7 +6,7 @@ import by.ovsyanka.mylist.Entity.User;
 import java.util.List;
 
 public interface UserService {
-    User registration(User user) throws Exception;
+    void register(UserDto userDto) throws Exception;
     List<User> getAllUsers();
     User findByName(String name);
     User findById(Long id);

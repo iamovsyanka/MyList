@@ -1,7 +1,7 @@
 package by.ovsyanka.mylist.Security.jwt;
 
 import by.ovsyanka.mylist.Entity.User;
-import by.ovsyanka.mylist.Entity.UserRole;
+import by.ovsyanka.mylist.Entity.Role;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,16 +17,16 @@ public final class JwtUserFactory {
     public static JwtUser create(User user) {
         return new JwtUser(
                 user.getUserId(),
-                user.getUserName(),
+                user.getName(),
                 user.getEmail(),
                 user.getPassword(),
-                mapToGrantedAuthorities(new ArrayList<UserRole>(Collections.singleton(user.getUserRole()))),
+                mapToGrantedAuthorities(new ArrayList<>(user.getRoles())),
                 true,
                 user.getUpdated()
         );
     }
 
-    private static List<GrantedAuthority> mapToGrantedAuthorities(List<UserRole> userRoles) {
+    private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> userRoles) {
         return userRoles.stream()
                 .map(role ->
                         new SimpleGrantedAuthority(role.getRole())

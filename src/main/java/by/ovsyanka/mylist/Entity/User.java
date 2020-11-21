@@ -20,8 +20,8 @@ public class User {
     @Column(name = "userId", nullable = false)
     private Long userId;
 
-    @Column(name = "userName", nullable = false, unique = true)
-    private String userName;
+    @Column(name = "user_name", nullable = false, unique = true)
+    private String name;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -31,8 +31,8 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "userroles",
-            joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
-            inverseJoinColumns = {@JoinColumn(name = "roleId", referencedColumnName = "roleId")})
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "roleId")})
     private List<Role> roles;
 
     @LastModifiedDate

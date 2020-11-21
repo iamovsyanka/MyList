@@ -31,15 +31,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Loggable
-    public User registration(User user) {
+    public void register(UserDto userDto) throws Exception {
+
+        if(userRepository
+                .findByName(userDto.getName()) != null) throw new Exception("User has already registered");
+
+        if(!userDto
+                .getPassword()
+                .equals(userDto
+                        .getRepeatPassword())){
+            throw new Exception("Passwords are not equal");
+        }
+
+        User user = new User();
+        user.setName(userDto.getName());
+
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         Role roleUser = roleRepository.findByRole("user");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(userRoles);
-
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package by.ovsyanka.mylist.Security.jwt;
 
-import by.ovsyanka.mylist.Entity.UserRole;
+import by.ovsyanka.mylist.Entity.Role;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class JwtTokenProvider {
@@ -40,7 +41,7 @@ public class JwtTokenProvider {
         secret = Base64.getEncoder().encodeToString(secret.getBytes());
     }
 
-    public String createToken(String username, UserRole role) {
+    public String createToken(String username, List<Role> role) {
 
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role);
