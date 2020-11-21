@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface UserService {
     User registration(User user) throws Exception;
-    List<User> getAll();
-    User findByUserName(String username);
+    List<User> getAllUsers();
+    User findByName(String name);
     User findById(Long id);
-    void delete(Long id);
+    void deleteById(Long id);
 }

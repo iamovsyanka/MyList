@@ -44,29 +44,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Loggable
-    public List<User> getAll() {
-        List<User> result = userRepository.findAll();
-
-        return result;
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
     @Loggable
-    public User findByUserName(String username) {
-        return userRepository.findByUserName(username);
+    public User findByName(String name) {
+        return userRepository.findByName(name);
     }
 
     @Override
     @Loggable
     public User findById(Long id) {
-        User result = userRepository.findById(id).orElse(null);
-
-        return result;
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
     @Loggable
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 }
