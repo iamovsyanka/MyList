@@ -3,6 +3,7 @@ package by.ovsyanka.mylist.Rest;
 import by.ovsyanka.mylist.Dto.UserDto;
 import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class RegistrationRestController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<User> register(@RequestBody UserDto user){
+    public ResponseEntity<User> register(@RequestBody UserDto user) {
         try {
             userService.register(user);
         } catch (Exception e) {
@@ -32,4 +33,5 @@ public class RegistrationRestController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }
