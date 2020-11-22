@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -12,20 +13,19 @@ import javax.persistence.*;
 @Table(name = "tasks")
 public class Task {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name= "increment", strategy= "increment")
-    @Column(name = "taskId", nullable = false)
-    private Long taskId;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    @Column(name = "taskName", nullable = false)
-    private String taskName;
+    @Column(name = "task_name", nullable = false)
+    private String name;
 
-    @Column(name = "taskDescription")
-    private String taskDescription;
+    @Column(name = "task_description")
+    private String description;
 
-    @Column(name = "dateOfCreation")
-    private String dateOfCreation;
+    @Column(name = "date_of_creation")
+    private Date dateOfCreation;
 
-    @Column(name = "dateOfDeadline")
-    private String dateOfDeadline;
+    @Column(name = "date_of_deadline")
+    private Date dateOfDeadline;
 }

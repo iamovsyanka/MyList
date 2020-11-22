@@ -17,8 +17,8 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "userId", nullable = false)
-    private Long userId;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(name = "user_name", nullable = false, unique = true)
     private String name;
@@ -31,8 +31,8 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "userroles",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "userId")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "roleId")})
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;
 
     @LastModifiedDate

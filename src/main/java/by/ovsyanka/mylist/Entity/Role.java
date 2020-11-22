@@ -15,8 +15,8 @@ import java.util.List;
 public class Role {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "roleId", nullable = false)
-    private Long roleId;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(name = "role", nullable = false, unique = true)
     private String role;

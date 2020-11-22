@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
+@Data
 @Entity
 @Getter
 @Setter
@@ -14,13 +15,13 @@ import java.util.Date;
 public class Comment {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "commentId", nullable = false)
-    private Long commentId;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    @Column(name = "commentContent", nullable = false)
+    @Column(name = "content", nullable = false)
     private String commentContent;
 
-    @Column(name = "dateOfCreation", nullable = false)
+    @Column(name = "date_of_creation", nullable = false)
     private Date dateOfCreation;
 
 

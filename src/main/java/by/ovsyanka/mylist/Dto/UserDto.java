@@ -34,9 +34,10 @@ public class UserDto {
 
     @Email(message = "Wrong email address")
     private String email;
+
     public static UserDto fromUser(User user) {
         UserDto userDto = new UserDto();
-        userDto.setUserId(user.getUserId());
+        userDto.setUserId(user.getId());
         userDto.setName(user.getName());
 
         return userDto;
