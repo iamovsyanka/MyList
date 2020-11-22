@@ -7,7 +7,6 @@ import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Repository.RoleRepository;
 import by.ovsyanka.mylist.Repository.UserRepository;
 import by.ovsyanka.mylist.Service.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -48,8 +46,7 @@ public class UserServiceImpl implements UserService {
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
 
-        User registerUser = userRepository.save(user);
-        return registerUser;
+        return userRepository.save(user);
     }
 
     @Override
