@@ -1,6 +1,5 @@
 package by.ovsyanka.mylist.Rest;
 
-
 import by.ovsyanka.mylist.Dto.UserDto;
 import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Service.UserService;
@@ -13,21 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1/admin/")
-public class AdminRestControllerV1 {
-
+@RequestMapping(value = "/api/users/")
+public class UserRestController {
     private final UserService userService;
 
     @Autowired
-    public AdminRestControllerV1(UserService userService) {
+    public UserRestController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping(value = "users/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable(name = "id") Long id) {
+    @GetMapping(value = "{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable(name = "id") Long id){
         User user = userService.findById(id);
 
-        if (user == null) {
+        if(user == null){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
