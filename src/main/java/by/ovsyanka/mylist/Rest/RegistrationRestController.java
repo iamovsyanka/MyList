@@ -10,8 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/api/v1/")
+@RequestMapping(value = "/api/")
 public class RegistrationRestController {
 
     private final UserService userService;

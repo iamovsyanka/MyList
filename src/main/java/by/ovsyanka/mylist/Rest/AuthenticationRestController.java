@@ -4,9 +4,7 @@ import by.ovsyanka.mylist.Dto.UserDto;
 import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Security.jwt.JwtTokenProvider;
 import by.ovsyanka.mylist.Service.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/api/auth/")
 public class AuthenticationRestController {
@@ -33,14 +32,6 @@ public class AuthenticationRestController {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
-    }
-
-    @GetMapping("login")
-    public ModelAndView index(Model model) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
-
-        return modelAndView;
     }
 
     @PostMapping("login")
