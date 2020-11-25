@@ -5,30 +5,29 @@ import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Security.jwt.JwtTokenProvider;
 import by.ovsyanka.mylist.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/api/auth/")
-public class AuthenticationRestController {
+@RequestMapping(value = "/api/")
+public class AuthAndRegisterRestController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
 
     @Autowired
-    public AuthenticationRestController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
+    public AuthAndRegisterRestController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
@@ -57,5 +56,15 @@ public class AuthenticationRestController {
         }
     }
 
+    @PostMapping("register")
+    public ResponseEntity<User> register(@RequestBody UserDto user) {
+        try {
+            userService.register(user);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
