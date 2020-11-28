@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/api/tasks")
-public class TaskService {
+public class TaskRestController {
 }

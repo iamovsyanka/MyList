@@ -1,9 +1,11 @@
 package by.ovsyanka.mylist.Rest;
 
-import by.ovsyanka.mylist.Dto.UserDto;
+import by.ovsyanka.mylist.Dto.AuthUserDto;
+import by.ovsyanka.mylist.Dto.RegisterUserDto;
 import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Security.jwt.JwtTokenProvider;
 import by.ovsyanka.mylist.Service.UserService;
+import by.ovsyanka.mylist.Validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import java.net.BindException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "*")
@@ -27,6 +33,9 @@ public class AuthAndRegisterRestController {
     private final UserService userService;
 
     @Autowired
+    private UserValidator userValidator;
+
+    @Autowired
     public AuthAndRegisterRestController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
@@ -34,10 +43,10 @@ public class AuthAndRegisterRestController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<Map<Object, Object>> login(@RequestBody UserDto requestDto) {
+    public ResponseEntity<Map<Object, Object>> login(@Valid @RequestBody AuthUserDto authUserDto) {
         try {
-            String username = requestDto.getName();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
+            String username = authUserDto.getName();
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, authUserDto.getPassword()));
             User user = userService.findByName(username);
 
             if (user == null) {
@@ -56,10 +65,10 @@ public class AuthAndRegisterRestController {
         }
     }
 
-    @PostMapping("register")
-    public ResponseEntity<User> register(@RequestBody UserDto user) {
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@Valid @RequestBody RegisterUserDto registerUserDto) {
         try {
-            userService.register(user);
+            userService.register(registerUserDto);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -67,4 +76,8 @@ public class AuthAndRegisterRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<List> handleBindException (BindException ex){
+        return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
