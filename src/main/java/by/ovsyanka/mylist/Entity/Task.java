@@ -28,4 +28,8 @@ public class Task {
 
     @Column(name = "date_of_deadline")
     private Date dateOfDeadline;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -37,4 +38,7 @@ public class User {
 
     @LastModifiedDate
     private Date updated;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Collection<Task> tasks;
 }
