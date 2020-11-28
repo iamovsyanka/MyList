@@ -1,6 +1,6 @@
 package by.ovsyanka.mylist.Service.impl;
 
-import by.ovsyanka.mylist.Dto.UserDto;
+import by.ovsyanka.mylist.Dto.RegisterUserDto;
 import by.ovsyanka.mylist.Entity.Role;
 import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Logging.Loggable;
@@ -29,9 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Loggable
-    public User register(UserDto userDto) throws Exception {
-
-        if(userRepository.findByName(userDto.getName()) != null) {
+    public User register(RegisterUserDto userDto) throws Exception {
+        if (userRepository.findByName(userDto.getName()) != null) {
             throw new Exception("User has already registered");
         }
 
