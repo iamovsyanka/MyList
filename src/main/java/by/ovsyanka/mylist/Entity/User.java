@@ -1,8 +1,6 @@
 package by.ovsyanka.mylist.Entity;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
@@ -12,15 +10,8 @@ import java.util.List;
 
 @Data
 @Entity
-@Getter
-@Setter
 @Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
+public class User extends BaseEntity {
     @Column(name = "user_name", nullable = false, unique = true)
     private String name;
 
@@ -31,14 +22,13 @@ public class User {
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "userroles",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    @JoinTable(name = "userroles", joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roles;
 
     @LastModifiedDate
     private Date updated;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Collection<Task> tasks;
 }

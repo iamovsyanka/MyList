@@ -1,22 +1,14 @@
 package by.ovsyanka.mylist.Entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Data
 @Entity
-@Getter
-@Setter
 @Table(name = "tasks")
-public class Task {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
+public class Task extends BaseEntity {
     @Column(name = "task_name", nullable = false)
     private String name;
 
@@ -29,7 +21,7 @@ public class Task {
     @Column(name = "date_of_deadline")
     private Date dateOfDeadline;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 }
