@@ -24,4 +24,11 @@ public class Task extends BaseEntity {
     @ManyToOne(fetch=FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id: " + super.getId() + ", " +
+                "name: " + name + "}";
+    }
 }

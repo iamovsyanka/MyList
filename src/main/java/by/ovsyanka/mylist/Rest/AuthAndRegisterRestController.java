@@ -5,7 +5,6 @@ import by.ovsyanka.mylist.Dto.RegisterUserDto;
 import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Security.jwt.JwtTokenProvider;
 import by.ovsyanka.mylist.Service.UserService;
-import by.ovsyanka.mylist.Validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +31,6 @@ public class AuthAndRegisterRestController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
 
-    @Autowired
-    private UserValidator userValidator;
 
     @Autowired
     public AuthAndRegisterRestController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {

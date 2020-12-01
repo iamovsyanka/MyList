@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UserDto {
+public class RegisterUserDto {
 
     @Null //автогенерация в БД
     private Long userId;
@@ -35,11 +35,11 @@ public class UserDto {
     @Email(message = "Wrong email address")
     private String email;
 
-    public static UserDto fromUser(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setUserId(user.getId());
-        userDto.setName(user.getName());
+    public static RegisterUserDto fromUser(User user) {
+        RegisterUserDto RegisterUserDto = new RegisterUserDto();
+        RegisterUserDto.setUserId(user.getId());
+        RegisterUserDto.setName(user.getName());
 
-        return userDto;
+        return RegisterUserDto;
     }
 }

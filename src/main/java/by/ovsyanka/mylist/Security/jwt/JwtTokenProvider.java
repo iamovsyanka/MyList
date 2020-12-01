@@ -1,6 +1,7 @@
 package by.ovsyanka.mylist.Security.jwt;
 
 import by.ovsyanka.mylist.Entity.Role;
+import by.ovsyanka.mylist.Logging.Loggable;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -41,10 +43,11 @@ public class JwtTokenProvider {
         secret = Base64.getEncoder().encodeToString(secret.getBytes());
     }
 
-    public String createToken(String username, List<Role> role) {
+    @Loggable
+    public String createToken(String username, List<Role> roles) {
 
         Claims claims = Jwts.claims().setSubject(username);
-        claims.put("role", role);
+        claims.put("roles", getRoleNames(roles));
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -57,16 +60,19 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    @Loggable
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
+    @Loggable
     public String getUsername(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
     }
 
+    @Loggable
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer_")) {
@@ -76,6 +82,7 @@ public class JwtTokenProvider {
         return null;
     }
 
+    @Loggable
     public boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
@@ -84,5 +91,15 @@ public class JwtTokenProvider {
         } catch (JwtException | IllegalArgumentException e) {
             throw new JwtAuthenticationException("JWT token is expired or invalid");
         }
+    }
+
+    private List<String> getRoleNames(List<Role> userRoles) {
+        List<String> result = new ArrayList<>();
+
+        userRoles.forEach(role -> {
+            result.add(role.getRole());
+        });
+
+        return result;
     }
 }
