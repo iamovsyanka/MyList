@@ -15,14 +15,15 @@ public class TaskDto {
     private String description;
     private Date dateOfCreation;
     private Date dateOfDeadline;
+    private Long userId;
 
     public static Task toTask(TaskDto taskDto){
         Task task = new Task();
         task.setId(taskDto.getId());
         task.setName(taskDto.getName());
         task.setDescription(taskDto.getDescription());
-        task.setDateOfCreation(taskDto.dateOfCreation);
-        task.setDateOfDeadline(taskDto.dateOfDeadline);
+        task.setDateOfCreation(taskDto.getDateOfCreation());
+        task.setDateOfDeadline(taskDto.getDateOfDeadline());
 
         return task;
     }
@@ -34,6 +35,7 @@ public class TaskDto {
         taskDto.setDescription(task.getDescription());
         taskDto.setDateOfCreation(task.getDateOfCreation());
         taskDto.setDateOfDeadline(task.getDateOfDeadline());
+        taskDto.setUserId(task.getUser().getId());
 
         return taskDto;
     }
