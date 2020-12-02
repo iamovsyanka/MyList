@@ -5,13 +5,11 @@ import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Security.jwt.JwtUser;
 import by.ovsyanka.mylist.Security.jwt.JwtUserFactory;
 import by.ovsyanka.mylist.Service.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
