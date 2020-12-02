@@ -16,13 +16,13 @@ public class TaskDto {
     private Date dateOfCreation;
     private Date dateOfDeadline;
 
-    public Task toTask(){
+    public static Task toTask(TaskDto taskDto){
         Task task = new Task();
-        task.setId(id);
-        task.setName(name);
-        task.setDescription(description);
-        task.setDateOfCreation(dateOfCreation);
-        task.setDateOfDeadline(dateOfDeadline);
+        task.setId(taskDto.getId());
+        task.setName(taskDto.getName());
+        task.setDescription(taskDto.getDescription());
+        task.setDateOfCreation(taskDto.dateOfCreation);
+        task.setDateOfDeadline(taskDto.dateOfDeadline);
 
         return task;
     }
