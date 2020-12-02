@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,15 @@ public class TaskRestController {
         }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @Loggable
+    @PostMapping(value = "newTask")
+    public ResponseEntity<TaskDto> addTask(@Valid @RequestBody TaskDto taskDto, Principal principal) throws Exception {
+        taskDto.setUserId(userService.findByName(principal.getName()).getId());
+        taskService.addTask(taskDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Loggable

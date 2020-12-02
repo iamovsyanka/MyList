@@ -1,10 +1,10 @@
 package by.ovsyanka.mylist.Service.impl;
 
+import by.ovsyanka.mylist.Dto.TaskDto;
 import by.ovsyanka.mylist.Entity.Task;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Repository.TaskRepository;
 import by.ovsyanka.mylist.Service.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +14,6 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
 
-    @Autowired
     public TaskServiceImpl(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
@@ -36,5 +35,18 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public void deleteTaskById(Long id) {
         taskRepository.deleteTaskById(id);
+    }
+
+    @Override
+    @Loggable
+    public void addTask(TaskDto taskDto) {
+        Task task = TaskDto.toTask(taskDto);
+
+        taskRepository.save(task);
+    }
+
+    @Override
+    public void updateTask(Long id, TaskDto task) {
+
     }
 }
