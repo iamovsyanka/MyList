@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface TaskService {
     Task findByName(String name);
-    List<Task> findAll();
+    List<Task> findAllByUserId(Long id);
 }

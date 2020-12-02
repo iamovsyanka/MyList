@@ -26,7 +26,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Loggable
-    public List<Task> findAll() {
-        return taskRepository.findAll();
+    public List<Task> findAllByUserId(Long id) {
+        return taskRepository.findAllByUserId(id);
     }
 }
