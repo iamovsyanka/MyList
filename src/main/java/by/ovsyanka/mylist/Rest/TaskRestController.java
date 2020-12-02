@@ -21,7 +21,6 @@ import java.util.List;
 public class TaskRestController {
 
     private final TaskService taskService;
-
     private final UserService userService;
 
     public TaskRestController(TaskService taskService, UserService userService) {
@@ -52,11 +51,18 @@ public class TaskRestController {
     }
 
     @Loggable
-    @DeleteMapping(value = "{id}")
-    public ResponseEntity<TaskDto> deleteTask(@PathVariable("id") Long id){
-        taskService.deleteTaskById(id);
+    @PutMapping(value = "{id}")
+    public ResponseEntity<TaskDto> updateTask(@PathVariable("id") Long id, @Valid @RequestBody TaskDto taskDto) {
+        taskService.updateTask(id, taskDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Loggable
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity<TaskDto> deleteTask(@PathVariable("id") Long id) {
+        taskService.deleteTaskById(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

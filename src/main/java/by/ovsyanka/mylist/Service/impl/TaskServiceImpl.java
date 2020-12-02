@@ -8,6 +8,7 @@ import by.ovsyanka.mylist.Service.TaskService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,12 +42,19 @@ public class TaskServiceImpl implements TaskService {
     @Loggable
     public void addTask(TaskDto taskDto) {
         Task task = TaskDto.toTask(taskDto);
+        task.setDateOfCreation(new Date());
 
         taskRepository.save(task);
     }
 
     @Override
+    @Loggable
     public void updateTask(Long id, TaskDto task) {
+        Task updatedTask = taskRepository.findById(id).get();
+        updatedTask.setName(task.getName());
+        updatedTask.setDescription(task.getDescription());
+        updatedTask.setDateOfDeadline(task.getDateOfDeadline());
 
+        taskRepository.save(updatedTask);
     }
 }
