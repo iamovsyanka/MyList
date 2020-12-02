@@ -4,6 +4,7 @@ import by.ovsyanka.mylist.Entity.Task;
 import lombok.Data;
 
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Data
@@ -11,8 +12,12 @@ public class TaskDto {
     @Null
     private Long id;
 
+    @Size(max = 40)
     private String name;
+
+    @Size(max = 4000)
     private String description;
+
     private Date dateOfCreation;
     private Date dateOfDeadline;
     private Long userId;
