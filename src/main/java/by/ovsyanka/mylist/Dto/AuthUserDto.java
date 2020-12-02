@@ -1,13 +1,9 @@
 package by.ovsyanka.mylist.Dto;
 
-import by.ovsyanka.mylist.Entity.User;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 import javax.validation.constraints.*;
 
-@Getter
-@Setter
+@Data
 public class AuthUserDto {
     @Null
     private Long userId;
