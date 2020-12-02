@@ -8,9 +8,7 @@ import by.ovsyanka.mylist.Service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -41,6 +39,14 @@ public class TaskRestController {
         }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @Loggable
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity<TaskDto> deleteTask(@PathVariable("id") Long id){
+        taskService.deleteTaskById(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

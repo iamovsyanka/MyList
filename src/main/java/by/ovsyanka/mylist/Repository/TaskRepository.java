@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    Task findByName(String name);
     List<Task> findAllByUserId(Long id);
+    Task findByName(String name);
+    void deleteTaskById(Long id);
 }

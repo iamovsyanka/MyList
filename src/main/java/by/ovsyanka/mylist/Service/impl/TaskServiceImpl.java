@@ -6,6 +6,7 @@ import by.ovsyanka.mylist.Repository.TaskRepository;
 import by.ovsyanka.mylist.Service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,5 +29,12 @@ public class TaskServiceImpl implements TaskService {
     @Loggable
     public List<Task> findAllByUserId(Long id) {
         return taskRepository.findAllByUserId(id);
+    }
+
+    @Override
+    @Loggable
+    @Transactional
+    public void deleteTaskById(Long id) {
+        taskRepository.deleteTaskById(id);
     }
 }
