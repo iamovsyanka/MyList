@@ -1,7 +1,6 @@
 package by.ovsyanka.mylist.Entity;
 
 import lombok.Data;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -26,9 +25,6 @@ public class User extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roles;
 
-    @LastModifiedDate
-    private Date updated;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Collection<Task> tasks;
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    private Collection<Task> tasks;
 }

@@ -21,13 +21,13 @@ public class Task extends BaseEntity {
     @Column(name = "date_of_deadline")
     private Date dateOfDeadline;
 
-    @ManyToOne(fetch=FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "Task{" +
                 "id: " + super.getId() + ", " +
                 "name: " + name + "}";
     }
