@@ -3,9 +3,9 @@ package by.ovsyanka.mylist.Rest;
 import by.ovsyanka.mylist.Dto.AuthUserDto;
 import by.ovsyanka.mylist.Dto.RegisterUserDto;
 import by.ovsyanka.mylist.Entity.User;
+import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Security.jwt.JwtTokenProvider;
 import by.ovsyanka.mylist.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/api/")
@@ -31,8 +32,6 @@ public class AuthAndRegisterRestController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
 
-
-    @Autowired
     public AuthAndRegisterRestController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
@@ -40,6 +39,7 @@ public class AuthAndRegisterRestController {
     }
 
     @PostMapping("login")
+    @Loggable
     public ResponseEntity<Map<Object, Object>> login(@Valid @RequestBody AuthUserDto authUserDto) {
         try {
             String username = authUserDto.getName();
@@ -63,6 +63,7 @@ public class AuthAndRegisterRestController {
     }
 
     @PostMapping("/register")
+    @Loggable
     public ResponseEntity<User> register(@Valid @RequestBody RegisterUserDto registerUserDto) {
         try {
             userService.register(registerUserDto);
