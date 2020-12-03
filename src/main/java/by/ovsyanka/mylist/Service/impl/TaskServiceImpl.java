@@ -20,6 +20,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Task findById(Long id) {
+        return taskRepository.findById(id).get();
+    }
+
+    @Override
     @Loggable
     public Task findByName(String name) {
         return taskRepository.findByName(name);
