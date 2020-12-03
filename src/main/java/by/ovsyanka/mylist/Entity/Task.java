@@ -29,6 +29,10 @@ public class Task extends BaseEntity {
     public String toString() {
         return "Task{" +
                 "id: " + super.getId() + ", " +
-                "name: " + name + "}";
+                "name: " + name +
+                "description:" + description +
+                "dateOfCreation:" + dateOfCreation +
+                "dateOfDeadline:" + dateOfDeadline +
+                "}";
     }
 }
