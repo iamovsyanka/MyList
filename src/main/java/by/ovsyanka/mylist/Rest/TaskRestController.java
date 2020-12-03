@@ -65,4 +65,12 @@ public class TaskRestController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Loggable
+    @GetMapping(value = "{id}")
+    public ResponseEntity<TaskDto> getTask(@PathVariable("id") Long id) {
+        taskService.findById(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
