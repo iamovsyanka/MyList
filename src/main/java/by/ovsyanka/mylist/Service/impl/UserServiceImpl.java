@@ -56,9 +56,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Loggable
-    public User findByName(String name) {
-        return userRepository.findByName(name);
-    }
+    public User findByName(String name) { return userRepository.findByName(name); }
 
     @Override
     @Loggable

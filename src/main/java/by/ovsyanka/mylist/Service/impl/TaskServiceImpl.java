@@ -6,6 +6,8 @@ import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Repository.TaskRepository;
 import by.ovsyanka.mylist.Repository.UserRepository;
 import by.ovsyanka.mylist.Service.TaskService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,8 +37,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Loggable
-    public List<Task> findAllByUserId(Long id) {
-        return taskRepository.findAllByUserId(id);
+    public Page<Task> findAllByUserId(Long id, Pageable pageable) {
+        return taskRepository.findAllByUserId(id, pageable);
     }
 
     @Override
