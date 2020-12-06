@@ -21,4 +21,9 @@ public class TaskRepositoryTests {
 
         Assert.assertNotNull(tasks);
     }
+
+    @Test
+    public void getTestById() {
+        Assert.assertNotNull(taskRepository.findById(4L));
+    }
 }

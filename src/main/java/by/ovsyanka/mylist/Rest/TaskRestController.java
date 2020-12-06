@@ -52,7 +52,8 @@ public class TaskRestController {
 
     @Loggable
     @PutMapping(value = "{id}")
-    public ResponseEntity<TaskDto> updateTask(@PathVariable("id") Long id, @Valid @RequestBody TaskDto taskDto) {
+    public ResponseEntity<TaskDto> updateTask(@PathVariable("id") Long id, @Valid @RequestBody TaskDto taskDto, Principal principal) {
+        taskDto.setUserId(userService.findByName(principal.getName()).getId());
         taskService.updateTask(id, taskDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
