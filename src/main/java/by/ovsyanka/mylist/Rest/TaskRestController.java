@@ -5,9 +5,8 @@ import by.ovsyanka.mylist.Entity.Task;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Service.TaskService;
 import by.ovsyanka.mylist.Service.UserService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,15 +32,20 @@ public class TaskRestController {
 
     @Loggable
     @GetMapping(value = "list")
-    public ResponseEntity<Page<TaskDto>> getTasks(Principal principal, Pageable pageable) {
-        Page<Task> tasks = taskService.findAllByUserId(userService.findByName(principal.getName()).getId(), pageable);
+    public ResponseEntity<Page<TaskDto>> getTasks(
+            Principal principal, Pageable pageable) {
+        List<Task> tasks = taskService.findAllByUserId(userService.findByName(principal.getName()).getId());
         List<TaskDto> taskDtos = new ArrayList<>();
 
         for (Task task : tasks) {
             taskDtos.add(TaskDto.fromTask(task));
         }
 
-        Page<TaskDto> result = new PageImpl<>(taskDtos, pageable, taskDtos.size());
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), taskDtos.size());
+        Page<TaskDto> result
+                = new PageImpl<>(taskDtos.subList(start, end), pageable, taskDtos.size());
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

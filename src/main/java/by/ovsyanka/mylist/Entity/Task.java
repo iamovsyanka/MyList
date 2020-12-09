@@ -21,7 +21,7 @@ public class Task extends BaseEntity {
     @Column(name = "date_of_deadline")
     private Date dateOfDeadline;
 
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -29,9 +29,9 @@ public class Task extends BaseEntity {
     public String toString() {
         return "Task{" +
                 "id: " + super.getId() + ", " +
-                "name: " + name +
-                "description:" + description +
-                "dateOfCreation:" + dateOfCreation +
+                "name: " + name + ", " +
+                "description:" + description + ", " +
+                "dateOfCreation:" + dateOfCreation + ", " +
                 "dateOfDeadline:" + dateOfDeadline +
                 "}";
     }
