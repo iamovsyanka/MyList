@@ -41,6 +41,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Loggable
+    public List<Task> findAllByUserIdAndName(Long id, String name) {
+        return taskRepository.findAllByUserIdAndName(id, name);
+    }
+
+    @Override
+    @Loggable
     @Transactional
     public void deleteTaskById(Long id) {
         taskRepository.deleteTaskById(id);

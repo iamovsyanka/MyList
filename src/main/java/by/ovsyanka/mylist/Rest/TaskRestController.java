@@ -50,6 +50,25 @@ public class TaskRestController {
     }
 
     @Loggable
+    @GetMapping(value = "search/{name}")
+    public ResponseEntity<Page<TaskDto>> getTasksByName(
+            @PathVariable("name") String name, Principal principal, Pageable pageable) {
+        List<Task> tasks = taskService.findAllByUserIdAndName(userService.findByName(principal.getName()).getId(), name);
+        List<TaskDto> taskDtos = new ArrayList<>();
+
+        for (Task task : tasks) {
+            taskDtos.add(TaskDto.fromTask(task));
+        }
+
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), taskDtos.size());
+        Page<TaskDto> result
+                = new PageImpl<>(taskDtos.subList(start, end), pageable, taskDtos.size());
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @Loggable
     @PostMapping(value = "newTask")
     public ResponseEntity<TaskDto> addTask(@Valid @RequestBody TaskDto taskDto, Principal principal) throws Exception {
         taskDto.setUserId(userService.findByName(principal.getName()).getId());
@@ -77,7 +96,7 @@ public class TaskRestController {
 
     @Loggable
     @GetMapping(value = "{id}")
-    public ResponseEntity<TaskDto> getTask(@PathVariable("id") Long id) {
+    public ResponseEntity<TaskDto> getTaskById(@PathVariable("id") Long id) {
         taskService.findById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
