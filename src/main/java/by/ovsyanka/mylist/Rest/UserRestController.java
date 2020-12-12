@@ -3,7 +3,7 @@ package by.ovsyanka.mylist.Rest;
 import by.ovsyanka.mylist.Dto.RegisterUserDto;
 import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +11,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/api/users/")
+@AllArgsConstructor
 public class UserRestController {
     private final UserService userService;
-
-    @Autowired
-    public UserRestController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping(value = "{id}")
     public ResponseEntity<RegisterUserDto> getUserById(@PathVariable(name = "id") Long id){

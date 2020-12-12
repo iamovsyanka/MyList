@@ -6,6 +6,7 @@ import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Security.jwt.JwtTokenProvider;
 import by.ovsyanka.mylist.Service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,17 +26,12 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/api/")
+@AllArgsConstructor
 public class AuthAndRegisterRestController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
-
-    public AuthAndRegisterRestController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
-    }
 
     @PostMapping("login")
     @Loggable

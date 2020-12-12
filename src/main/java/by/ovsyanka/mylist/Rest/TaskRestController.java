@@ -5,7 +5,7 @@ import by.ovsyanka.mylist.Entity.Task;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Service.TaskService;
 import by.ovsyanka.mylist.Service.UserService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +20,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @Controller
 @RequestMapping(value = "/api/tasks/")
+@AllArgsConstructor
 public class TaskRestController {
 
     private final TaskService taskService;
     private final UserService userService;
-
-    public TaskRestController(TaskService taskService, UserService userService) {
-        this.taskService = taskService;
-        this.userService = userService;
-    }
 
     @Loggable
     @GetMapping(value = "list")
