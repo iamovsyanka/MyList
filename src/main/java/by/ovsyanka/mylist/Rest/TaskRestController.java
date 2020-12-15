@@ -6,10 +6,11 @@ import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Service.TaskService;
 import by.ovsyanka.mylist.Service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
