@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
-@Controller
+@RestController
 @RequestMapping(value = "/api/tasks/")
 @AllArgsConstructor
 public class TaskRestController {
@@ -93,8 +93,6 @@ public class TaskRestController {
     @Loggable
     @GetMapping(value = "{id}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable("id") Long id) {
-        taskService.findById(id);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(TaskDto.fromTask(taskService.findById(id)), HttpStatus.OK);
     }
 }

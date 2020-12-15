@@ -18,6 +18,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String ADMIN_ENDPOINT = "/api/admin/**";
     private static final String LOGIN_ENDPOINT = "/api/login";
     private static final String REGISTER_ENDPOINT = "/api/register";
+    private static final String DOCS_ENDPOINT = "/mylist-api";
+    private static final String SWAGGER_ENDPOINT = "/swagger-ui.html";
 
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
@@ -41,6 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                     .antMatchers(LOGIN_ENDPOINT).permitAll()
+                    .antMatchers(DOCS_ENDPOINT).permitAll()
+                    //.antMatchers(SWAGGER_ENDPOINT).permitAll()
                     .antMatchers(REGISTER_ENDPOINT).permitAll()
                     .antMatchers(ADMIN_ENDPOINT).hasRole("admin")
                     .anyRequest().authenticated()
