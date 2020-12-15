@@ -26,6 +26,7 @@ public class RegisterUserDto {
     @Size(min = 8, max = 20, message = "Password must be between 8 and 20 symbols")
     private String repeatPassword;
 
+    @NotBlank(message = "Please, enter the email!")
     @Email(message = "Wrong email address")
     private String email;
 
