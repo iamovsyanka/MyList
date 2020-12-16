@@ -16,10 +16,10 @@ public class Task extends BaseEntity {
     private String description;
 
     @Column(name = "date_of_creation")
-    private Date dateOfCreation;
+    private String dateOfCreation;
 
     @Column(name = "date_of_deadline")
-    private Date dateOfDeadline;
+    private String dateOfDeadline;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "user_id")
