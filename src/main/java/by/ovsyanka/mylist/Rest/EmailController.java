@@ -1,5 +1,7 @@
 package by.ovsyanka.mylist.Rest;
 
+import by.ovsyanka.mylist.Entity.Task;
+import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Service.UserService;
 import org.springframework.http.HttpStatus;
@@ -30,11 +32,19 @@ public class EmailController {
     public ResponseEntity<Object> sendSimpleEmail(Principal principal) {
 
         SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setTo(userService.findByName(principal.getName()).getEmail());
+        User user = userService.findByName(principal.getName());
+        message.setTo(user.getEmail());
         message.setSubject("MyList");
-        message.setText("Hello, Im testing Simple Email");
+        StringBuilder msg = new StringBuilder("Hello, I want to remind you that there are " + user.getTasks().size() +" more tasks on your list\n\n");
 
+        for (Task task:
+                user.getTasks()) {
+            if(task.getDateOfDeadline() != null) {
+                msg.append("✓ Task: ").append(task.getName()).append(", deadline: ").append(task.getDateOfDeadline()).append("\n");
+            }
+        }
+
+        message.setText(String.valueOf(msg));
         this.emailSender.send(message);
 
         return new ResponseEntity<>(HttpStatus.OK);
