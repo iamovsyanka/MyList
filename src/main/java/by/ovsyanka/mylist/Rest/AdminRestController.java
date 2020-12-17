@@ -1,6 +1,7 @@
 package by.ovsyanka.mylist.Rest;
 
 import by.ovsyanka.mylist.Dto.RegisterUserDto;
+import by.ovsyanka.mylist.Dto.TaskDto;
 import by.ovsyanka.mylist.Dto.UserDto;
 import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Logging.Loggable;
@@ -55,4 +56,13 @@ public class AdminRestController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @Loggable
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity<UserDto> deleteUser(@PathVariable("id") Long id) {
+        userService.deleteById(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
