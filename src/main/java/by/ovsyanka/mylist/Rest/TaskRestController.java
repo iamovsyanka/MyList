@@ -5,6 +5,11 @@ import by.ovsyanka.mylist.Entity.Task;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Service.TaskService;
 import by.ovsyanka.mylist.Service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -27,6 +32,11 @@ public class TaskRestController {
     private final TaskService taskService;
     private final UserService userService;
 
+    @Operation(summary = "Get all tasks", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return tasks",
+                    content = {@Content(mediaType = "application/json")})
+    })
     @Loggable
     @GetMapping(value = "list")
     public ResponseEntity<Page<TaskDto>> getTasks(
@@ -46,6 +56,11 @@ public class TaskRestController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @Operation(summary = "Search tasks by name", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return tasks",
+                    content = {@Content(mediaType = "application/json")})
+    })
     @Loggable
     @GetMapping(value = "search/{name}")
     public ResponseEntity<Page<TaskDto>> getTasksByName(
@@ -65,6 +80,11 @@ public class TaskRestController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @Operation(summary = "Add task", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Add task",
+                    content = {@Content(mediaType = "application/json")})
+    })
     @Loggable
     @PostMapping(value = "newTask")
     public ResponseEntity<TaskDto> addTask(@Valid @RequestBody TaskDto taskDto, Principal principal) throws Exception {
@@ -74,6 +94,11 @@ public class TaskRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "Update task", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Update task",
+                    content = {@Content(mediaType = "application/json")})
+    })
     @Loggable
     @PutMapping(value = "{id}")
     public ResponseEntity<TaskDto> updateTask(@PathVariable("id") Long id, @Valid @RequestBody TaskDto taskDto, Principal principal) {
@@ -83,6 +108,11 @@ public class TaskRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "Delete task", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Delete task",
+                    content = {@Content(mediaType = "application/json")})
+    })
     @Loggable
     @DeleteMapping(value = "{id}")
     public ResponseEntity<TaskDto> deleteTask(@PathVariable("id") Long id) {
@@ -91,6 +121,11 @@ public class TaskRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "Get all task by id", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Return task",
+                    content = {@Content(mediaType = "application/json")})
+    })
     @Loggable
     @GetMapping(value = "{id}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable("id") Long id) {
