@@ -93,6 +93,7 @@ public class JwtTokenProvider {
         }
     }
 
+    @Loggable
     private List<String> getRoleNames(List<Role> userRoles) {
         List<String> result = new ArrayList<>();
 

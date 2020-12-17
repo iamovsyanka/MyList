@@ -9,8 +9,10 @@ import by.ovsyanka.mylist.Service.TaskService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -56,7 +58,9 @@ public class TaskServiceImpl implements TaskService {
     @Loggable
     public void addTask(TaskDto taskDto) {
         Task task = TaskDto.toTask(taskDto);
-        task.setDateOfCreation(new Date());
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dayFormat = new SimpleDateFormat("d.MM.YYYY", Locale.getDefault());
+        task.setDateOfCreation(dayFormat.format(calendar.getTime()));
         task.setUser(userRepository.findById(taskDto.getUserId()).get());
 
         taskRepository.save(task);

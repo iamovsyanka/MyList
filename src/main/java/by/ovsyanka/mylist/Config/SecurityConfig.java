@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String TASK_ENDPOINT = "/api/tasks/**";
     private static final String ADMIN_ENDPOINT = "/api/admin/**";
 
-//    @Autowired
+    //    @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -32,17 +32,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                    .httpBasic().disable()
-                    .cors().
+                .httpBasic().disable()
+                .cors().
                 and()
-                    .csrf().disable()
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                    .authorizeRequests()
-                    .antMatchers(TASK_ENDPOINT).authenticated()
-                    .antMatchers(ADMIN_ENDPOINT).hasRole("admin")
-                    .anyRequest().permitAll()
+                .authorizeRequests()
+                .antMatchers(TASK_ENDPOINT).authenticated()
+                .antMatchers(ADMIN_ENDPOINT).hasRole("admin")
+                .anyRequest().permitAll()
                 .and()
-                    .apply(new JwtConfigurer(jwtTokenProvider));
+                .apply(new JwtConfigurer(jwtTokenProvider));
     }
 }

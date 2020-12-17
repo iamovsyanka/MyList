@@ -1,6 +1,5 @@
 package by.ovsyanka.mylist.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.ToString;
 

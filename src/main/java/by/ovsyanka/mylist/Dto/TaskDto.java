@@ -5,7 +5,6 @@ import lombok.Data;
 
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
 @Data
 public class TaskDto {
@@ -18,8 +17,8 @@ public class TaskDto {
     @Size(max = 4000)
     private String description;
 
-    private Date dateOfCreation;
-    private Date dateOfDeadline;
+    private String dateOfCreation;
+    private String dateOfDeadline;
     private Long userId;
 
     public static Task toTask(TaskDto taskDto){

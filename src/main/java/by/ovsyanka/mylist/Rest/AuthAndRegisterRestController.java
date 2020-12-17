@@ -2,6 +2,7 @@ package by.ovsyanka.mylist.Rest;
 
 import by.ovsyanka.mylist.Dto.AuthUserDto;
 import by.ovsyanka.mylist.Dto.RegisterUserDto;
+import by.ovsyanka.mylist.Entity.Role;
 import by.ovsyanka.mylist.Entity.User;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Security.jwt.JwtTokenProvider;
@@ -22,6 +23,7 @@ import java.net.BindException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -46,10 +48,11 @@ public class AuthAndRegisterRestController {
             }
 
             String token = jwtTokenProvider.createToken(username, user.getRoles());
-
+            List<String> roleNames = user.getRoles().stream().map(Role::getRole).collect(Collectors.toList());
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);
             response.put("token", token);
+            response.put("roles", roleNames);
 
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
