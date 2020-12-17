@@ -18,7 +18,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String TASK_ENDPOINT = "/api/tasks/**";
     private static final String ADMIN_ENDPOINT = "/api/admin/**";
 
-    //    @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -40,9 +39,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(TASK_ENDPOINT).authenticated()
-                .antMatchers(ADMIN_ENDPOINT).hasRole("admin")
+                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
+
+        http.headers()
+                .frameOptions()
+                .sameOrigin()
+                .cacheControl();
     }
 }
