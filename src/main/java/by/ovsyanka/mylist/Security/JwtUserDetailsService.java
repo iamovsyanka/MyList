@@ -5,6 +5,7 @@ import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Security.jwt.JwtUser;
 import by.ovsyanka.mylist.Security.jwt.JwtUserFactory;
 import by.ovsyanka.mylist.Service.UserService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +22,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         this.userService = userService;
     }
 
+    @SneakyThrows
     @Override
     @Loggable
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

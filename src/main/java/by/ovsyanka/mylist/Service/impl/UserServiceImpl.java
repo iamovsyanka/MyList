@@ -3,6 +3,7 @@ package by.ovsyanka.mylist.Service.impl;
 import by.ovsyanka.mylist.Dto.RegisterUserDto;
 import by.ovsyanka.mylist.Entity.Role;
 import by.ovsyanka.mylist.Entity.User;
+import by.ovsyanka.mylist.Exception.UserNameNotFoundException;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Repository.RoleRepository;
 import by.ovsyanka.mylist.Repository.UserRepository;
@@ -58,7 +59,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Loggable
-    public User findByName(String name) { return userRepository.findByName(name); }
+    public User findByName(String name) throws UserNameNotFoundException {
+        User user = userRepository.findByName(name);
+        if(user == null) {
+            throw new UserNameNotFoundException("User not found");
+        }
+
+        return user;
+    }
 
     @Override
     @Loggable

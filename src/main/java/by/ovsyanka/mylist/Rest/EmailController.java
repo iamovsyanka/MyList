@@ -2,6 +2,7 @@ package by.ovsyanka.mylist.Rest;
 
 import by.ovsyanka.mylist.Entity.Task;
 import by.ovsyanka.mylist.Entity.User;
+import by.ovsyanka.mylist.Exception.UserNameNotFoundException;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Service.UserService;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class EmailController {
 
     @GetMapping(value = "sendNotify")
     @Loggable
-    public ResponseEntity<Object> sendSimpleEmail(Principal principal) {
+    public ResponseEntity<Object> sendSimpleEmail(Principal principal) throws UserNameNotFoundException {
 
         SimpleMailMessage message = new SimpleMailMessage();
         User user = userService.findByName(principal.getName());

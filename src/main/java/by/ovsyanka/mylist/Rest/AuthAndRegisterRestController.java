@@ -4,6 +4,7 @@ import by.ovsyanka.mylist.Dto.AuthUserDto;
 import by.ovsyanka.mylist.Dto.RegisterUserDto;
 import by.ovsyanka.mylist.Entity.Role;
 import by.ovsyanka.mylist.Entity.User;
+import by.ovsyanka.mylist.Exception.UserNameNotFoundException;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Security.jwt.JwtTokenProvider;
 import by.ovsyanka.mylist.Service.UserService;
@@ -55,7 +56,7 @@ public class AuthAndRegisterRestController {
             response.put("roles", roleNames);
 
             return ResponseEntity.ok(response);
-        } catch (AuthenticationException e) {
+        } catch (AuthenticationException | UserNameNotFoundException e) {
             throw new BadCredentialsException("Invalid username or password");
         }
     }

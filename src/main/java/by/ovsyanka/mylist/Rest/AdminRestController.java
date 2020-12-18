@@ -4,6 +4,7 @@ import by.ovsyanka.mylist.Dto.RegisterUserDto;
 import by.ovsyanka.mylist.Dto.TaskDto;
 import by.ovsyanka.mylist.Dto.UserDto;
 import by.ovsyanka.mylist.Entity.User;
+import by.ovsyanka.mylist.Exception.UserNameNotFoundException;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,7 +38,7 @@ public class AdminRestController {
     })
     @Loggable
     @GetMapping(value = "{name}")
-    public ResponseEntity<UserDto> getUserByName(@PathVariable(name = "name") String name) {
+    public ResponseEntity<UserDto> getUserByName(@PathVariable(name = "name") String name) throws UserNameNotFoundException {
         User user = userService.findByName(name);
 
         if (user == null) {

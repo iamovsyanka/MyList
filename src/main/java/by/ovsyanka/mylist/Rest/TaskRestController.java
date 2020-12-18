@@ -2,6 +2,7 @@ package by.ovsyanka.mylist.Rest;
 
 import by.ovsyanka.mylist.Dto.TaskDto;
 import by.ovsyanka.mylist.Entity.Task;
+import by.ovsyanka.mylist.Exception.UserNameNotFoundException;
 import by.ovsyanka.mylist.Logging.Loggable;
 import by.ovsyanka.mylist.Service.TaskService;
 import by.ovsyanka.mylist.Service.UserService;
@@ -40,7 +41,7 @@ public class TaskRestController {
     @Loggable
     @GetMapping(value = "list")
     public ResponseEntity<Page<TaskDto>> getTasks(
-            Principal principal, Pageable pageable) {
+            Principal principal, Pageable pageable) throws UserNameNotFoundException {
         List<Task> tasks = taskService.findAllByUserId(userService.findByName(principal.getName()).getId());
         List<TaskDto> taskDtos = new ArrayList<>();
 
@@ -64,7 +65,7 @@ public class TaskRestController {
     @Loggable
     @GetMapping(value = "search/{name}")
     public ResponseEntity<Page<TaskDto>> getTasksByName(
-            @PathVariable("name") String name, Principal principal, Pageable pageable) {
+            @PathVariable("name") String name, Principal principal, Pageable pageable) throws UserNameNotFoundException {
         List<Task> tasks = taskService.findAllByUserIdAndName(userService.findByName(principal.getName()).getId(), name);
         List<TaskDto> taskDtos = new ArrayList<>();
 
@@ -101,7 +102,7 @@ public class TaskRestController {
     })
     @Loggable
     @PutMapping(value = "{id}")
-    public ResponseEntity<TaskDto> updateTask(@PathVariable("id") Long id, @Valid @RequestBody TaskDto taskDto, Principal principal) {
+    public ResponseEntity<TaskDto> updateTask(@PathVariable("id") Long id, @Valid @RequestBody TaskDto taskDto, Principal principal) throws UserNameNotFoundException {
         taskDto.setUserId(userService.findByName(principal.getName()).getId());
         taskService.updateTask(id, taskDto);
 
